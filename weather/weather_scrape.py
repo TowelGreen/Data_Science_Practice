@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
         
-
+# import driver 
 def render_page(url,type):
     driver = webdriver.Chrome()
     driver.get(url)
@@ -27,7 +27,7 @@ def render_page(url,type):
         r = driver.page_source
         driver.quit()
     return r
-
+# function that get weather data by hour 
 def hourly_scraper(page,dates,type):
     output = pd.DataFrame()
 
@@ -50,7 +50,7 @@ def hourly_scraper(page,dates,type):
             trial = i.get_text()
             data.append(trial)
 
-
+        # select columns
         numbers = pd.DataFrame([data[i:i+7] for i in range(0, len(data), 7)],columns=["Temperature","Dew Point","Humidity","Wind Speed","Wind Gust","Pressure","Precipitation"])
         hour = pd.DataFrame(data_hour[0::17],columns=["Time"])
         wind = pd.DataFrame(data_hour[7::17],columns=["Wind"])
@@ -69,6 +69,7 @@ def hourly_scraper(page,dates,type):
 
 page = "https://www.wunderground.com/history/daily/RJTT/date/"
 dates = []
+# get first 5 months
 for i in range(1,5):
     date = f"2021-12-{i}"
     dates.append(date)
